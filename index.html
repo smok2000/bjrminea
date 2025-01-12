@@ -6,7 +6,7 @@
     <title>Comment te sens-tu aujourd'hui ?</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
@@ -31,8 +31,8 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Grille à 4 colonnes */
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr); /* Grille à 2 colonnes */
+            gap: 20px;
             width: 80%;
             max-width: 700px;
             margin: 30px auto;
@@ -99,13 +99,14 @@
 
 <header id="header">
     <h1>Comment te sens-tu aujourd’hui ?</h1>
+    <h2>De quelle humeur suis-je ?</h2>
 </header>
 
 <div class="grid" id="grid">
-    <div class="cell" onclick="showResult('Amoureuse', 'Écouter Les Noces de Figaro')">Amoureuse</div>
-    <div class="cell" onclick="showResult('Triste', 'Écouter Paris by night')">Triste</div>
-    <div class="cell" onclick="showResult('Heureuse', 'En profiter pour lire des poèmes d’Aragon')">Heureuse</div>
-    <div class="cell" onclick="showResult('Fatiguée', 'Se plonger dans un épisode de Baron noir et s’endormir tranquillement devant')">Fatiguée</div>
+    <div class="cell" data-humeur="Amoureuse" data-secret="Écouter Les Noces de Figaro">Amoureuse</div>
+    <div class="cell" data-humeur="Triste" data-secret="Écouter Paris by night">Triste</div>
+    <div class="cell" data-humeur="Heureuse" data-secret="En profiter pour lire des poèmes d’Aragon">Heureuse</div>
+    <div class="cell" data-humeur="Fatiguée" data-secret="Se plonger dans un épisode de Baron noir et s’endormir tranquillement devant">Fatiguée</div>
 </div>
 
 <div class="result" id="result">
@@ -115,13 +116,22 @@
 </div>
 
 <script>
+    // Sélection des cases et gestion des clics
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+            const humeur = cell.getAttribute('data-humeur');
+            const secret = cell.getAttribute('data-secret');
+            showResult(humeur, secret);
+        });
+    });
+
     // Fonction pour afficher le résultat
     function showResult(humeur, secret) {
-        // Masquer le titre et le damier
+        // Masquer le damier et le titre
         document.getElementById('header').classList.add('hidden');
         document.getElementById('grid').classList.add('hidden');
 
-        // Afficher le résultat
+        // Mettre à jour et afficher la section résultat
         document.getElementById('result-title').textContent = Puisque tu te sens ${humeur}, alors je te conseille de :;
         document.getElementById('result-secret').textContent = secret;
         document.getElementById('result').style.display = 'block';
@@ -129,8 +139,11 @@
 
     // Fonction pour réinitialiser la page
     function resetPage() {
+        // Réafficher le damier et le titre
         document.getElementById('header').classList.remove('hidden');
         document.getElementById('grid').classList.remove('hidden');
+
+        // Masquer la section résultat
         document.getElementById('result').style.display = 'none';
     }
 </script>
