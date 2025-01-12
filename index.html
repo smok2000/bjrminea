@@ -6,47 +6,52 @@
     <title>Comment te sens-tu aujourd'hui ?</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            text-align: center;
+            background: linear-gradient(135deg, #ffe9e9, #ffebe6);
+            color: #333;
         }
 
         header {
-            margin: 20px 0;
+            margin: 30px 0;
         }
 
         h1 {
-            font-size: 2.5em;
-            color: #333;
+            font-size: 2.8em;
+            margin: 0;
         }
 
         h2 {
             font-size: 1.5em;
-            color: #666;
+            margin-top: 10px;
+            color: #555;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 colonnes */
-            gap: 10px;
-            margin: 20px auto;
+            grid-template-columns: repeat(4, 1fr); /* Grille à 4 colonnes */
+            gap: 15px;
             width: 80%;
-            max-width: 600px;
+            max-width: 700px;
+            margin: 30px auto;
         }
 
         .cell {
-            background-color: #f0f0f0;
+            background-color: #fefefe;
             border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            border-radius: 5px;
+            font-size: 1.2em;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: transform 0.2s, background-color 0.3s;
         }
 
         .cell:hover {
-            background-color: #ffe08a;
+            background-color: #ffe6cc;
+            transform: scale(1.05);
         }
 
         .hidden {
@@ -55,18 +60,38 @@
 
         .result {
             display: none;
+            padding: 20px;
             margin: 20px auto;
+            max-width: 600px;
+            background-color: #fff8f2;
+            border-radius: 10px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
         }
 
         .result h1 {
-            font-size: 2em;
-            color: #444;
+            font-size: 2.2em;
             margin-bottom: 20px;
         }
 
         .result p {
-            font-size: 1.2em;
-            color: #555;
+            font-size: 1.3em;
+            color: #444;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #ff9966;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff704d;
         }
     </style>
 </head>
@@ -74,7 +99,6 @@
 
 <header id="header">
     <h1>Comment te sens-tu aujourd’hui ?</h1>
-    <h2>De quelle humeur suis-je ?</h2>
 </header>
 
 <div class="grid" id="grid">
@@ -87,23 +111,27 @@
 <div class="result" id="result">
     <h1 id="result-title"></h1>
     <p id="result-secret"></p>
+    <button onclick="resetPage()">Revenir au début</button>
 </div>
 
 <script>
+    // Fonction pour afficher le résultat
     function showResult(humeur, secret) {
-        // Cacher le damier et le titre
+        // Masquer le titre et le damier
         document.getElementById('header').classList.add('hidden');
         document.getElementById('grid').classList.add('hidden');
 
         // Afficher le résultat
-        const resultTitle = document.getElementById('result-title');
-        const resultSecret = document.getElementById('result-secret');
-        const resultSection = document.getElementById('result');
+        document.getElementById('result-title').textContent = Puisque tu te sens ${humeur}, alors je te conseille de :;
+        document.getElementById('result-secret').textContent = secret;
+        document.getElementById('result').style.display = 'block';
+    }
 
-        resultTitle.textContent = Puisque tu te sens ${humeur}, alors je te conseille de :;
-        resultSecret.textContent = secret;
-
-        resultSection.style.display = 'block';
+    // Fonction pour réinitialiser la page
+    function resetPage() {
+        document.getElementById('header').classList.remove('hidden');
+        document.getElementById('grid').classList.remove('hidden');
+        document.getElementById('result').style.display = 'none';
     }
 </script>
 
