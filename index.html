@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un clic, un sourire</title>
+    <title>Comment te sens-tu aujourd'hui ?</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
+            background-color: #f9f9f9;
         }
 
         header {
@@ -44,54 +45,65 @@
             transition: background-color 0.3s;
         }
 
-        .cell.clicked {
+        .cell:hover {
             background-color: #ffe08a;
         }
 
-        .secret {
+        .hidden {
             display: none;
-            margin-top: 10px;
+        }
+
+        .result {
+            display: none;
+            margin: 20px auto;
+        }
+
+        .result h1 {
+            font-size: 2em;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .result p {
+            font-size: 1.2em;
             color: #555;
-            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Un clic, un sourire</h1>
+<header id="header">
+    <h1>Comment te sens-tu aujourd’hui ?</h1>
     <h2>De quelle humeur suis-je ?</h2>
 </header>
 
-<div class="grid">
-    <div class="cell" onclick="revealSecret(this)">
-        <strong>Amoureuse</strong>
-        <p class="secret">Écouter Les Noces de Figaro</p>
-    </div>
-    <div class="cell" onclick="revealSecret(this)">
-        <strong>Triste</strong>
-        <p class="secret">Écouter Paris by night</p>
-    </div>
-    <div class="cell" onclick="revealSecret(this)">
-        <strong>Heureuse</strong>
-        <p class="secret">En profiter pour lire des poèmes d’Aragon</p>
-    </div>
-    <div class="cell" onclick="revealSecret(this)">
-        <strong>Fatiguée</strong>
-        <p class="secret">Se plonger dans un épisode de Baron noir et s’endormir tranquillement devant</p>
-    </div>
+<div class="grid" id="grid">
+    <div class="cell" onclick="showResult('Amoureuse', 'Écouter Les Noces de Figaro')">Amoureuse</div>
+    <div class="cell" onclick="showResult('Triste', 'Écouter Paris by night')">Triste</div>
+    <div class="cell" onclick="showResult('Heureuse', 'En profiter pour lire des poèmes d’Aragon')">Heureuse</div>
+    <div class="cell" onclick="showResult('Fatiguée', 'Se plonger dans un épisode de Baron noir et s’endormir tranquillement devant')">Fatiguée</div>
+</div>
+
+<div class="result" id="result">
+    <h1 id="result-title"></h1>
+    <p id="result-secret"></p>
 </div>
 
 <script>
-    function revealSecret(cell) {
-        // Change the color of the clicked cell
-        cell.classList.add('clicked');
+    function showResult(humeur, secret) {
+        // Cacher le damier et le titre
+        document.getElementById('header').classList.add('hidden');
+        document.getElementById('grid').classList.add('hidden');
 
-        // Reveal the secret
-        const secret = cell.querySelector('.secret');
-        if (secret) {
-            secret.style.display = 'block';
-        }
+        // Afficher le résultat
+        const resultTitle = document.getElementById('result-title');
+        const resultSecret = document.getElementById('result-secret');
+        const resultSection = document.getElementById('result');
+
+        resultTitle.textContent = Puisque tu te sens ${humeur}, alors je te conseille de :;
+        resultSecret.textContent = secret;
+
+        resultSection.style.display = 'block';
     }
 </script>
 
